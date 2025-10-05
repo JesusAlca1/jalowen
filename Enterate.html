@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Cuenta Regresiva para Halloween! 🎃</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #FF5722;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-shadow: 2px 2px 4px #8B0000;
+            margin-bottom: 20px;
+            z-index: 10;
+        }
+
+        #countdown {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .unit {
+            background-color: #333;
+            border: 2px solid #FF5722;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #FF5722;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        .unit span {
+            display: block;
+            font-size: 4em;
+            font-weight: bold;
+        }
+
+        .unit p {
+            margin: 0;
+            font-size: 1.2em;
+            text-transform: uppercase;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+            }
+        }
+
+        .halloween-img {
+            position: absolute;
+            width: 80px;
+            height: auto;
+            animation: floatAndRotate 10s infinite ease-in-out alternate;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .halloween-img:nth-child(1) { top: 10%; left: 5%; animation-duration: 12s; transform: rotate(15deg); }
+        .halloween-img:nth-child(2) { top: 20%; right: 10%; animation-duration: 9s; transform: rotate(-25deg); }
+        .halloween-img:nth-child(3) { bottom: 15%; left: 15%; animation-duration: 11s; transform: rotate(5deg); }
+        .halloween-img:nth-child(4) { bottom: 5%; right: 5%; animation-duration: 13s; transform: rotate(-10deg); }
+        .halloween-img:nth-child(5) { top: 40%; left: 30%; animation-duration: 8s; transform: rotate(30deg); }
+        .halloween-img:nth-child(6) { top: 60%; right: 20%; animation-duration: 10s; transform: rotate(-5deg); }
+
+        @keyframes floatAndRotate {
+            0% {
+                transform: translateY(0) rotate(var(--initial-rotation, 0deg));
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-20px) rotate(calc(var(--initial-rotation, 0deg) + 10deg));
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0) rotate(var(--initial-rotation, 0deg));
+                opacity: 0.8;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://i.imgur.com/ENLuymj.jpeg" alt="Imagen 1" class="halloween-img" style="--initial-rotation: 15deg;">
+    <img src="https://i.imgur.com/xbs6Znu.jpeg" alt="Imagen 2" class="halloween-img" style="--initial-rotation: -25deg;">
+    <img src="https://i.imgur.com/vAsAs9f.jpeg" alt="Imagen 3" class="halloween-img" style="--initial-rotation: 5deg;">
+    <img src="https://i.imgur.com/ZOuvvYx.jpeg" alt="Imagen 4" class="halloween-img" style="--initial-rotation: -10deg;">
+    <img src="https://i.imgur.com/oSXm1Hb.jpeg" alt="Imagen 5" class="halloween-img" style="--initial-rotation: 30deg;">
+    <img src="https://i.imgur.com/d6qdShZ.jpeg" alt="Imagen 6" class="halloween-img" style="--initial-rotation: -5deg;">
+
+    <h1>¡Faltan para tu Fiesta de Halloween! 👻</h1>
+
+    <div id="countdown">
+        <div class="unit">
+            <span id="days">00</span>
+            <p>Días</p>
+        </div>
+        <div class="unit">
+            <span id="hours">00</span>
+            <p>Horas</p>
+        </div>
+        <div class="unit">
+            <span id="minutes">00</span>
+            <p>Minutos</p>
+        </div>
+        <div class="unit">
+            <span id="seconds">00</span>
+            <p>Segundos</p>
+        </div>
+    </div>
+
+    <script>
+        const countdown = () => {
+            const now = new Date();
+            // Establece la fecha de tu fiesta (31 de octubre a las 8 PM)
+            const halloween = new Date("October 31, 2025 20:00:00"); 
+
+            const totalSeconds = (halloween - now) / 1000;
+
+            if (totalSeconds < 0) {
+                document.getElementById('countdown').innerHTML = '<h2>¡La Fiesta ya empezó! 🎉</h2>';
+                clearInterval(interval);
+                return;
+            }
+
+            const days = Math.floor(totalSeconds / 3600 / 24);
+            const hours = Math.floor(totalSeconds / 3600) % 24;
+            const minutes = Math.floor(totalSeconds / 60) % 60;
+            const seconds = Math.floor(totalSeconds) % 60;
+
+            document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+            document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+        };
+
+        const interval = setInterval(countdown, 1000);
+        countdown();
+    </script>
+
+</body>
+</html>
